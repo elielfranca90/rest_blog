@@ -1,10 +1,19 @@
 version: '3.9'
 
 services:
-  app:
-    build: .
+
+  app-compose:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - postgres-compose
+
   postgres-compose:
     image: postgres:14-alpine
     environment:
@@ -15,6 +24,8 @@ services:
       - "4444:5432"
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
+    depends_on:
+      - app-compose
     networks:
       - postgres-compose-network
       

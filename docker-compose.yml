@@ -1,6 +1,10 @@
 version: '3.9'
 
 services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
   postgres-compose:
     image: postgres:14-alpine
     environment:
